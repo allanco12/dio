@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html Lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Jogo do Mario</title>
+	<meta name="description" content="Exemplo de reconhecimento de voz em javascript. Versão desenvolivda a partir do exemplo do Labs da inovation one de Felipe Aguiar.">
+	<meta name="keywords" content="reconhecimnto de voz,voice recognition,mario,super,colors,cores,aprender inglês">
+	<meta name="author" content="Allan Conselvan de Oliveira">	
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="shortcut icon" type="image/x-icon" href="img/icone.png">
+</head>
+<body>
+	<div id="container">
+		<header id="cabecalho-principal">
+			<div id="pontuacao-game">
+				<img src="img/moeda.png" height="20px" alt="moeda">
+				Moedas: &nbsp;<span id="pontuacao-atual">0</span>
+			</div><!--pontuacao-game-->				
+			<div id="nome-jogo">
+				Super Mario English Challenge
+			</div><!--nome-jogo-->
+		</header><!--cabecalho-principal-->
+		<section id="corpo">
+			<div id="esquerda">
+				<h3>FALE O NOME DA COR EM INGLÊS</h3>
+				<span id="cor-na-caixa"></span>
+				<div id="cor-atual"></div>
+				<button id="btn-responder">RESPONDER</button>
+			</div><!--esquerda-->
+			<div id="direita">
+				<img src="img/mario.png" height="390px" alt="mario">
+				<div id="container-transcricao"  class="escondido">
+					<img src="img/balao.png" alt="balao" height="140px">
+					<p id="transcricao-texto">Eu ouvi <br><b><span id="transcricao-cor"></span></b>!</p>
+				</div><!--transcricao-->
+			</div><!--direita-->		
+		</section><!--corpor-->
+		<footer id="rodape">
+			<img src="img/logo-dio.png" height="90px" alt="logo dio">
+		</footer><!--rodape-->
+	</div><!--container-->
+
+	<script src="js/functions.js"></script>
+</body>
+</html>
