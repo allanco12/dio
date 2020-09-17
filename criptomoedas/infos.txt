@@ -1,0 +1,13 @@
+pegar api key em 
+
+https://pro.coinmarketcap.com/account
+
+A minha é:
+d1ce813d-b41f-4df1-9f2e-5dd829c12ff3
+
+precisa adicionar a seguinte extensão no chrome:
+https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc/related
+
+
+possivel solução pro problema:
+https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe

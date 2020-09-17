@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CoinMarketCap</title>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+	<header>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active" aria-current="page">Coin Market Cap</li>
+			</ol>
+
+		</nav>		
+	</header>
+    <section class="container text-center" id="loading">
+    	<h3 style="color: #b3c430;">Loading</h3>
+    	<img src="img/loading.gif" alt='Loading coin market information...'>
+    </section>
+	<section>
+		<div class="container text-center" id="coins">
+		</div><!--container-->
+	</section>
+	<!--
+          <div class="d-flex p-3 bd-highlight">
+            <div id='coins'></div>
+          </div>
+	-->
+	<script type="text/javascript">
+
+		const imageDict = {
+			"BTC": {file: "btc.jpg", h: 0.95857988165 },
+			"LTC": {file: "ltc.jpg", h: 1.0 },
+			"NMC": {file: "nmc.png", h: 1.0 },
+			"TRC": {file: "trc.png", h: 1.0 },
+			"PPC": {file: "ppc.svg", h: 1.0 },
+			"NVC": {file: "nvc.jpg", h: 1.0 },
+			"FTC": {file: "ftc.png", h: 1.0 },
+			"FRC": {file: "frc.png", h: 1.0 },
+			"DGC": {file: "dgc.png", h: 1.0 },
+			"GLC": {file: "glc.png", h: 1.0 },
+		}
+
+		function getImage(sigla){
+			console.log(sigla);
+			if(typeof imageDict[sigla] === 'undefined')
+				return {file: 'coin.jpg', h: 0.65333333333};
+
+			return imageDict[sigla];
+		}
+
+
+		//My API key
+		var apikey = {
+			key: 'd1ce813d-b41f-4df1-9f2e-5dd829c12ff3'
+		};
+		
+/*
+		A extensão Moesif Orign & CORS Changer para o google chrome parece não estar funcionando para a versão  85.0.4183.102 (Versão oficial) 64 bits go google chrome.
+		
+		Como alternativa, utilizou-se um CROS proxy conforme mostrado em https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+*/
+
+		const proxyurl = "https://cors-anywhere.herokuapp.com/";
+		const url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=' + 
+			apikey.key;
+
+		//GET Fetch Requisition
+		fetch(proxyurl + url)
+		.then((response) => {
+			if(!response.ok) throw new Error('Erro ao executara requisição, status ' + response.status);
+			return response.json();
+		})
+		.then((api) => {
+			// aqui vem a resposta da api
+			console.log(api);
+
+			// Show API information
+
+			var texto = "";
+			var tmp = "";
+			var cnt = 0;
+			// Get 10 coins and symbols
+			for(let i = 0; i < 12; i++){
+
+				//Show API information
+				if(cnt === 3){
+					texto += '</div><!--row-->';
+					cnt = 0;
+				} 
+				if(cnt === 0) texto += '<div class="row">\n';
+				console.log(api.data[i].symbol);
+				let imgData = getImage(api.data[i].symbol);
+				console.log(imgData);
+				texto += `
+					<div class="col-md-4">
+					<div class="card"  style="width: 18rem;margin-bottom: 3%;">
+						<img src="img/${imgData.file}" class="align-self-center mr-3" alt="coin logo" width="100" height="${imgData.h*100}" style="padding-top: 10px;">
+						<div class="card-body">
+							<h5 class="card-title">${api.data[i].name}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">${api.data[i].symbol}</h6>		
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">Last Historical Data:<br>${api.data[i].last_historical_data}</li>	
+								<li class="list-group-item">Fisrt Historical Data:<br>${api.data[i].first_historical_data}</li>
+							</ul>
+						</div>
+					</div>
+					</div><!--col-md-4-->
+				`;
+				
+				cnt++;
+
+			}
+			texto += '</div><!--row-->';
+
+			document.getElementById("loading").style.display = "none";
+			document.getElementById("coins").innerHTML = texto;
+		})
+		.catch((error) => {
+			console.error(error.message);
+		});
+
+	</script>
+</body>
+</html>
